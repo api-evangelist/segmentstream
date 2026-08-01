@@ -1,0 +1,89 @@
+# SegmentStream
+
+## Docs
+
+- [External BI tools](https://docs.segmentstream.com/attribution/bi-tools.md): Connect SegmentStream pre-aggregated data in Google BigQuery to external BI tools like Looker Studio.
+- [Custom dimensions](https://docs.segmentstream.com/attribution/custom-dimensions.md): Create custom dimension groupings based on standard dimensions for tailored attribution reports and optimisation portfolios.
+- [Customisation](https://docs.segmentstream.com/attribution/customisation.md): Customise attribution report tables by modifying dimensions, metrics, conversions, sorting, and visualisation options.
+- [Data filtering](https://docs.segmentstream.com/attribution/data-filtering.md): Filter attribution report data by date ranges and dimension values to focus on the metrics that matter.
+- [Dimensions](https://docs.segmentstream.com/attribution/dimensions.md): All standard dimensions available in SegmentStream attribution reports, including how each dimension is populated.
+- [Export table data](https://docs.segmentstream.com/attribution/export.md): Export attribution report data to CSV or Google Sheets for further analysis.
+- [Attribution FAQ](https://docs.segmentstream.com/attribution/faq.md): Frequently asked questions about SegmentStream attribution reports, data discrepancies, dimension values, and platform-specific behaviour.
+- [Metric approximation](https://docs.segmentstream.com/attribution/metric-approximation.md): How SegmentStream approximates publisher platform metrics when broken down by dimensions not available from the publisher.
+- [Attribution](https://docs.segmentstream.com/attribution/overview.md): Assess digital marketing campaign outcomes with adaptable attribution reports covering key metrics from Cost per Conversion to ROAS.
+- [User-journey exploration](https://docs.segmentstream.com/attribution/user-journey.md): Analyse how users navigate your website and how different attribution models assign conversion credit.
+- [Dashboards](https://docs.segmentstream.com/dashboards.md): Create customizable visual dashboards to monitor and analyze your project's performance metrics at a glance.
+- [Geo Tests](https://docs.segmentstream.com/geo-tests.md): Conduct geo-incrementality experiments to measure the real sales impact of your paid media investments using controlled test and control markets.
+- [Getting started](https://docs.segmentstream.com/mcp/getting-started.md): Connect your AI tool to SegmentStream MCP in under a minute.
+- [SegmentStream MCP](https://docs.segmentstream.com/mcp/overview.md): Connect AI tools to your SegmentStream workspace using the Model Context Protocol (MCP) to query attribution data, manage configurations, and analyze marketing performance.
+- [Supported tools](https://docs.segmentstream.com/mcp/supported-tools.md): Complete reference of all SegmentStream MCP tools — grouped by category with parameters, return values, and example prompts.
+- [Optimization FAQ](https://docs.segmentstream.com/optimization/faq.md): Common questions about the optimization module, including adoption calculation, prediction accuracy, and gain metrics.
+- [Optimization overview](https://docs.segmentstream.com/optimization/optimization-overview.md): Analyze your portfolio's performance over time with adoption rates, prediction accuracy, and gain metrics to make data-driven budget decisions.
+- [Optimization](https://docs.segmentstream.com/optimization/overview.md): Maximize ROI by intelligently reallocating your budget across all digital channels and campaigns with AI-powered recommendations.
+- [Portfolio optimize](https://docs.segmentstream.com/optimization/portfolio-optimize.md): View budget allocation recommendations, compare optimization scenarios, and apply budget changes across your channel portfolio.
+- [Portfolio setup](https://docs.segmentstream.com/optimization/portfolio-setup.md): Configure optimization portfolios with strategy, goal, schedule, and granularity settings to receive budget allocation recommendations.
+- [Overview](https://docs.segmentstream.com/overview.md): SegmentStream lets you measure advertising ROI and other KPIs by consolidating first-party and third-party data with ML-powered attribution.
+- [Attribution models](https://docs.segmentstream.com/project-configuration/attribution-models.md): Configure attribution models in SegmentStream to determine how marketing touchpoints receive credit for conversions.
+- [First click](https://docs.segmentstream.com/project-configuration/attribution-models/first-click.md): Configure the first click attribution model in SegmentStream to assign conversion credit to the initial marketing touchpoint.
+- [Last-click](https://docs.segmentstream.com/project-configuration/attribution-models/last-click.md): Configure the last-click attribution model in SegmentStream to assign conversion credit to the final marketing touchpoint.
+- [Multi-touch](https://docs.segmentstream.com/project-configuration/attribution-models/multi-touch.md): Configure the multi-touch attribution model in SegmentStream to assign conversion credit based on session lift in purchase probability.
+- [Visit Scoring](https://docs.segmentstream.com/project-configuration/attribution-models/visit-scoring.md): Configure the Visit Scoring attribution model in SegmentStream to assign fractional conversion credit based on user behaviour.
+- [Conversions](https://docs.segmentstream.com/project-configuration/conversions.md): Set up and manage conversions to measure the performance of your marketing activity in SegmentStream.
+- [Combined conversions](https://docs.segmentstream.com/project-configuration/conversions/combined-conversions.md): Merge two or more simple conversions into a single conversion in SegmentStream.
+- [Conversions export](https://docs.segmentstream.com/project-configuration/conversions/conversions-export.md): Export conversion signals from SegmentStream to advertising and analytics platforms.
+- [Facebook conversions export](https://docs.segmentstream.com/project-configuration/conversions/conversions-export/facebook-conversions-export.md): Export SegmentStream conversions to your Facebook pixel for improved ad targeting and measurement.
+- [Google Ads conversions export](https://docs.segmentstream.com/project-configuration/conversions/conversions-export/google-ads-conversions-export.md): Export SegmentStream conversions to Google Ads for bidding optimization and enhanced conversion tracking.
+- [Google Analytics 4 conversions export](https://docs.segmentstream.com/project-configuration/conversions/conversions-export/google-analytics-4-conversions-export.md): Export SegmentStream conversions to your Google Analytics 4 property for unified reporting.
+- [LinkedIn conversions export](https://docs.segmentstream.com/project-configuration/conversions/conversions-export/linkedin-conversions-export.md): Export SegmentStream conversions to your LinkedIn ad account for improved targeting and measurement.
+- [Custom conversions](https://docs.segmentstream.com/project-configuration/conversions/custom-conversions.md): Create conversions using SQL queries against raw BigQuery data for offline or CRM-based conversion tracking.
+- [Conversions FAQ](https://docs.segmentstream.com/project-configuration/conversions/faq.md): Frequently asked questions about conversions in SegmentStream, including Meta export restrictions and custom conversion troubleshooting.
+- [Lead Scoring conversions](https://docs.segmentstream.com/project-configuration/conversions/lead-scoring-conversions.md): Use machine learning to assign quality scores to leads based on their characteristics and likelihood to convert.
+- [Simple conversions](https://docs.segmentstream.com/project-configuration/conversions/simple-conversions.md): Track purchase or custom events collected through the SegmentStream tracker as conversions.
+- [Awin](https://docs.segmentstream.com/project-configuration/data-sources/awin.md): Connect Awin to SegmentStream and import affiliate cost data.
+- [Criteo](https://docs.segmentstream.com/project-configuration/data-sources/criteo.md): Connect Criteo to SegmentStream and import campaign cost data.
+- [Facebook](https://docs.segmentstream.com/project-configuration/data-sources/facebook.md): Connect Facebook Ads to SegmentStream and import campaign cost data.
+- [Data sources FAQ](https://docs.segmentstream.com/project-configuration/data-sources/faq.md): Frequently asked questions about connecting data sources to SegmentStream.
+- [Google Ads](https://docs.segmentstream.com/project-configuration/data-sources/google-ads.md): Connect Google Ads to SegmentStream and import campaign cost data.
+- [Google Display & Video 360](https://docs.segmentstream.com/project-configuration/data-sources/google-dv360.md): Connect Google Display & Video 360 to SegmentStream and import campaign cost data.
+- [Google Sheets](https://docs.segmentstream.com/project-configuration/data-sources/google-sheets.md): Import cost data into SegmentStream from Google Sheets for any advertising platform.
+- [Hubspot](https://docs.segmentstream.com/project-configuration/data-sources/hubspot.md): Connect Hubspot to SegmentStream and import CRM data.
+- [impact.com](https://docs.segmentstream.com/project-configuration/data-sources/impact.md): Connect impact.com to SegmentStream and import affiliate cost data.
+- [LinkedIn](https://docs.segmentstream.com/project-configuration/data-sources/linkedin.md): Connect LinkedIn Ads to SegmentStream and import campaign cost data.
+- [Microsoft Advertising](https://docs.segmentstream.com/project-configuration/data-sources/microsoft-ads.md): Connect Microsoft Advertising to SegmentStream and import campaign cost data.
+- [Data sources](https://docs.segmentstream.com/project-configuration/data-sources/overview.md): Connect advertising platforms and data warehouses to SegmentStream to view campaign performance data in reports.
+- [Pinterest](https://docs.segmentstream.com/project-configuration/data-sources/pinterest.md): Connect Pinterest Ads to SegmentStream and import campaign cost data.
+- [Reddit](https://docs.segmentstream.com/project-configuration/data-sources/reddit.md): Connect Reddit Ads to SegmentStream and import campaign cost data.
+- [RTB House](https://docs.segmentstream.com/project-configuration/data-sources/rtb-house.md): Connect RTB House to SegmentStream and import campaign cost data.
+- [Snapchat](https://docs.segmentstream.com/project-configuration/data-sources/snapchat.md): Connect Snapchat Ads to SegmentStream and import campaign cost data.
+- [Snowflake](https://docs.segmentstream.com/project-configuration/data-sources/snowflake.md): Connect Snowflake to SegmentStream and import arbitrary tables or query results into your project's BigQuery dataset.
+- [TikTok](https://docs.segmentstream.com/project-configuration/data-sources/tiktok.md): Connect TikTok Ads to SegmentStream and import campaign cost data.
+- [Twitter (X Ads)](https://docs.segmentstream.com/project-configuration/data-sources/x-ads.md): Connect X Ads (formerly Twitter Ads) to SegmentStream and import campaign cost data.
+- [Data warehouse](https://docs.segmentstream.com/project-configuration/data-warehouse.md): Choose between the SegmentStream-hosted data warehouse or your own Google BigQuery instance.
+- [Google BigQuery](https://docs.segmentstream.com/project-configuration/data-warehouse/google-bigquery.md): Use your own Google BigQuery instance as the central data warehouse for your SegmentStream project.
+- [Grant BigQuery access to SegmentStream](https://docs.segmentstream.com/project-configuration/data-warehouse/google-bigquery/grant-bigquery-access-to-segmentstream.md): Grant the required IAM roles to the SegmentStream service account so it can access your BigQuery data warehouse.
+- [Prepare your Google Cloud Project](https://docs.segmentstream.com/project-configuration/data-warehouse/google-bigquery/prepare-your-google-cloud-project.md): Step-by-step guide to set up your Google Cloud Platform account, billing, and project for use with SegmentStream.
+- [SegmentStream data warehouse](https://docs.segmentstream.com/project-configuration/data-warehouse/segmentstream.md): Use the built-in SegmentStream data warehouse for a quick and easy project setup with no additional configuration.
+- [Events tracking](https://docs.segmentstream.com/project-configuration/events-tracking.md): Configure event tracking on your website or app to feed ML models and power SegmentStream attribution.
+- [Adobe Analytics](https://docs.segmentstream.com/project-configuration/events-tracking/adobe-analytics.md): Set up event tracking in SegmentStream using data from Adobe Analytics via Data Feeds.
+- [Consent mode](https://docs.segmentstream.com/project-configuration/events-tracking/consent-mode.md): Understand how SegmentStream handles user consent and privacy when collecting behavioural data.
+- [FAQ](https://docs.segmentstream.com/project-configuration/events-tracking/faq.md): Frequently asked questions about event tracking in SegmentStream.
+- [GA4 BigQuery Export](https://docs.segmentstream.com/project-configuration/events-tracking/ga4-bigquery-export.md): Set up Google Analytics 4 BigQuery Export to send event data to SegmentStream for attribution and ML-powered insights.
+- [Additional GA4 settings](https://docs.segmentstream.com/project-configuration/events-tracking/ga4-bigquery-export/additional-ga4-settings.md): Configure custom user properties and event parameters in GA4 to improve SegmentStream integration with your business.
+- [Set up GA4 BigQuery Link](https://docs.segmentstream.com/project-configuration/events-tracking/ga4-bigquery-export/set-up-ga4-bigquery-link.md): Link your Google Analytics 4 property to BigQuery to export event data for use with SegmentStream.
+- [Identity graph](https://docs.segmentstream.com/project-configuration/identity-graph.md): Connect fragmented user sessions across browsers, devices, and channels for accurate multi-touch attribution.
+- [Cross-device tracking via email hash (GTM)](https://docs.segmentstream.com/project-configuration/identity-graph/cross-device-tracking-via-email-hash-(gtm).md): Implement ehash-based cross-device tracking using Google Tag Manager to enable session stitching in GA4 for SegmentStream attribution.
+- [Cross-device tracking via email hash (Segment)](https://docs.segmentstream.com/project-configuration/identity-graph/cross-device-tracking-via-email-hash-(segment).md): Implement ehash-based cross-device tracking using Segment to enable session stitching in GA4 for SegmentStream attribution.
+- [User ID](https://docs.segmentstream.com/project-configuration/identity-graph/user-id.md): Implement user ID tracking in Google Analytics to improve cross-device attribution in SegmentStream.
+- [Lead gen business integration](https://docs.segmentstream.com/project-configuration/lead-gen.md): Ensure accurate attribution and data quality for businesses collecting leads through websites and ad platforms.
+- [How to track ad platform lead forms in analytics and CRM](https://docs.segmentstream.com/project-configuration/lead-gen-business-integration/how-to-track-ad-platform-lead-forms-in-analytics-and-crm.md): Create synthetic landing pages and virtual sessions to track and attribute leads generated on ad platforms like Meta, LinkedIn, Google Ads, and TikTok.
+- [Sending website lead data to your CRM](https://docs.segmentstream.com/project-configuration/lead-gen-business-integration/sending-website-lead-data-to-your-crm.md): Send the SegmentStream user identifier along with lead data to your CRM for consistent attribution across consented and non-consented users.
+- [Integrating without IP tracking](https://docs.segmentstream.com/project-configuration/no-ip-tracking.md): Set up SegmentStream without collecting user IP addresses by using hashed IPs and server-side geolocation.
+- [Project configuration](https://docs.segmentstream.com/project-configuration/overview.md): Set up your SegmentStream project: data warehouse, event tracking, identity graph, SDK, data sources, conversions, and attribution models.
+- [SegmentStream SDK](https://docs.segmentstream.com/project-configuration/sdk.md): Install the SegmentStream SDK to preserve click IDs, send cookieless pings, and enable privacy-safe conversion tracking.
+- [SegmentStream AI Prerequisites](https://docs.segmentstream.com/project-configuration/segmentstream-ai-prerequisites.md): Prepare your Google Cloud project and GA4 BigQuery export so you are ready to connect to SegmentStream AI when access is granted.
+- [Self-reported attribution](https://docs.segmentstream.com/project-configuration/self-reported-attribution.md): Recover lost conversions from Direct, Brand, or Organic channels by asking users how they heard about you and mapping responses to paid or owned channels.
+- [Quick start](https://docs.segmentstream.com/quick-start.md): Set up your first SegmentStream project, from account creation through reports and marketing mix optimization.
+
+## OpenAPI Specs
+
+- [openapi](https://docs.segmentstream.com/api-reference/openapi.json)

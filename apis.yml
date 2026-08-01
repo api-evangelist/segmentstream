@@ -1,7 +1,17 @@
 aid: segmentstream
 name: SegmentStream
-description: SegmentStream is a company surfaced as a portfolio company of techstars and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  SegmentStream is a marketing measurement platform that gives AI agents an
+  attribution, budget-optimization, and incrementality-testing "brain." It
+  consolidates first-party and third-party marketing data in Google BigQuery and
+  applies ML-powered, cross-channel attribution across 20+ ad platforms (Google
+  Ads, Meta, TikTok, LinkedIn, Microsoft, Snapchat, Pinterest, Reddit, Criteo,
+  and more), then recommends budget reallocation via marginal-ROAS analysis and
+  validates impact with geo-holdout incrementality experiments. Every capability
+  is exposed as a tool through a hosted Model Context Protocol (MCP) server, so
+  Claude, ChatGPT, Cursor, and any MCP client can query attribution reports,
+  manage configuration, and run BigQuery SQL over a workspace. Backed by
+  Techstars.
 url: https://raw.githubusercontent.com/api-evangelist/segmentstream/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -9,12 +19,52 @@ x-backed-by:
 - techstars
 x-tier: stub
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://segmentstream.com/images/og-image.png
 tags:
 - Company
-apis: []
+- Marketing Analytics
+- Attribution
+- Marketing Measurement
+- Advertising
+- Budget Optimization
+- Incrementality
+- BigQuery
+- MCP
+- AI Agents
+apis:
+- name: SegmentStream MCP
+  description: >-
+    Hosted Model Context Protocol server exposing SegmentStream's marketing
+    measurement, attribution, budget-optimization, and BigQuery query
+    capabilities as agent-callable tools (read-only reporting by default).
+  humanURL: https://docs.segmentstream.com/mcp/overview
+  baseURL: https://mcp.segmentstream.com/mcp
+  tags:
+  - MCP
+  - Attribution
+  - Marketing Measurement
+  properties:
+  - type: MCPServer
+    url: mcp/segmentstream-mcp.yml
+  - type: GettingStarted
+    url: https://docs.segmentstream.com/mcp/getting-started
+  - type: APIReference
+    url: https://docs.segmentstream.com/mcp/supported-tools
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -23,3 +73,55 @@ maintainers:
 common:
 - type: Website
   url: https://segmentstream.com/
+- type: DeveloperPortal
+  url: https://docs.segmentstream.com/
+- type: Documentation
+  url: https://docs.segmentstream.com/
+- type: GettingStarted
+  url: https://docs.segmentstream.com/mcp/getting-started
+- type: Blog
+  url: https://segmentstream.com/blog
+- type: Pricing
+  url: https://segmentstream.com/pricing
+- type: SignUp
+  url: https://app.segmentstream.com/
+- type: TermsOfService
+  url: https://segmentstream.com/terms
+- type: PrivacyPolicy
+  url: https://segmentstream.com/privacy
+- type: GitHubOrganization
+  url: https://github.com/segmentstream
+- type: StatusPage
+  url: https://status.segmentstream.com
+- type: MCPServer
+  name: SegmentStream MCP server
+  url: mcp/segmentstream-mcp.yml
+- type: WellKnown
+  url: well-known/segmentstream-well-known.yml
+- type: LLMsTxt
+  url: llms/segmentstream-llms.txt
+- type: Packages
+  url: packages/segmentstream-packages.yml
+- type: SDKs
+  url: packages/segmentstream-packages.yml
+- type: Authentication
+  url: authentication/segmentstream-authentication.yml
+- type: Conventions
+  url: conventions/segmentstream-conventions.yml
+- type: Conformance
+  url: conformance/segmentstream-conformance.yml
+- type: Lifecycle
+  url: lifecycle/segmentstream-lifecycle.yml
+- type: DomainSecurity
+  url: security/segmentstream-domain-security.yml
+- type: TrustCenter
+  url: security/segmentstream-trust-center.yml
+- type: Compliance
+  url: https://segmentstream.com/trust
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 13
+  pass: local-v1

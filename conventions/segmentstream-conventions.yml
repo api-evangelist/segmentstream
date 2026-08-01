@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.segmentstream.com/mcp + OAuth discovery metadata
+summary: >-
+  SegmentStream's primary programmatic surface is a hosted MCP server, not a
+  classic REST API, so cross-cutting semantics are expressed in MCP tool terms.
+authentication:
+  style: oauth2
+  detail: >-
+    Authorization-code + PKCE (S256) via mcp.segmentstream.com; the agent
+    inherits the signed-in user's role and permissions. See
+    authentication/segmentstream-authentication.yml.
+access_model:
+  default: read-only
+  detail: >-
+    Reporting/analytics tools are read-only. Configuration tools
+    (create_project, connect_data_source, create_conversion,
+    create_attribution_model, etc.) are gated to the user's role. BigQuery
+    access (bigquery_execute_sql) is read-only against the project dataset.
+idempotency:
+  supported: false
+  detail: No documented idempotency-key mechanism.
+pagination:
+  supported: unknown
+  detail: Not documented publicly; MCP list_* tools return collections.
+data_warehouse:
+  detail: >-
+    Data lands in BigQuery — either a SegmentStream-hosted warehouse or the
+    customer's own Google BigQuery instance; SQL is queryable through MCP tools.
+error_semantics:
+  detail: >-
+    Errors surface as MCP tool errors and via list_incidents /
+    get_data_source_logs / get_workflow_status. No published RFC 9457 catalog.
+cross_links:
+  authentication: authentication/segmentstream-authentication.yml
+  mcp: mcp/segmentstream-mcp.yml
+  lifecycle: lifecycle/segmentstream-lifecycle.yml

@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  npm registry (@segmentstream scope) + github.com/segmentstream org; the docs
+  reference a tracker "SDK installation" step (Digital Data Manager).
+packages:
+  - language: javascript
+    registry: npm
+    name: "@segmentstream/utils"
+    url: https://www.npmjs.com/package/@segmentstream/utils
+    install: npm install @segmentstream/utils
+    official: true
+  - language: javascript
+    registry: github
+    name: digital-data-manager
+    url: https://github.com/segmentstream/digital-data-manager
+    description: >-
+      Open-source browser data-collection / dataLayer manager library
+      (SegmentStream tracker) used to feed events into attribution.
+    official: true
+  - language: javascript
+    registry: github
+    name: dbex-sdk
+    url: https://github.com/segmentstream/dbex-sdk
+    description: Driveback Experiments SDK.
+    official: true
+  - language: typescript
+    registry: github
+    name: argo-client-node
+    url: https://github.com/segmentstream/argo-client-node
+    description: Argo client for Node generated from an OpenAPI specification.
+    official: true
+notes: >-
+  No first-party SegmentStream package found on PyPI, Maven Central, NuGet,
+  RubyGems, Packagist, or crates.io (checked 2026-07-21). The primary
+  programmatic surface is the hosted MCP server (mcp/segmentstream-mcp.yml),
+  not a language SDK.

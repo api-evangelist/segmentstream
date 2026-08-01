@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://mcp.segmentstream.com/.well-known/oauth-authorization-server +
+  https://docs.segmentstream.com/mcp + https://segmentstream.com/trust
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: MCP server publishes an OAuth 2.0 authorization-code flow (authorize/token endpoints)
+  - id: oauth2-pkce
+    conforms: true
+    evidence: code_challenge_methods_supported = [S256]
+  - id: rfc8414-oauth-authorization-server-metadata
+    conforms: true
+    evidence: /.well-known/oauth-authorization-server returns 200 with issuer + endpoints
+  - id: rfc9728-oauth-protected-resource-metadata
+    conforms: true
+    evidence: /.well-known/oauth-protected-resource returns 200 with resource + authorization_servers
+  - id: rfc7591-dynamic-client-registration
+    conforms: true
+    evidence: registration_endpoint present (https://mcp.segmentstream.com/oauth/register)
+  - id: model-context-protocol
+    conforms: true
+    evidence: hosted MCP server at https://mcp.segmentstream.com/mcp (Streamable HTTP + SSE)
+  - id: openid-connect
+    conforms: false
+    evidence: no /.well-known/openid-configuration (404); OAuth-only, no id_token
+  - id: gdpr
+    conforms: true
+    evidence: trust center documents GDPR / UK GDPR / CCPA / PIPEDA / LGPD compliance program
+  - id: soc2
+    conforms: partial
+    evidence: trust center states controls are "aligned with SOC 2 principles", monitored via Drata (not a stated attestation)

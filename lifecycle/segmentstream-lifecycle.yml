@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: searched
+source: https://status.segmentstream.com + https://docs.segmentstream.com
+versioning:
+  scheme: unversioned-mcp
+  detail: >-
+    The MCP endpoint (https://mcp.segmentstream.com/mcp) is served without a
+    version segment; tools evolve continuously. No public REST version scheme.
+deprecation:
+  policy_url: null
+  sunset_header: unknown
+  detail: No published deprecation policy or RFC 8594 Sunset-header support found.
+sla:
+  url: null
+  uptime_target: null
+status_page: https://status.segmentstream.com
+status_page_provider: Freshping
+deprecated_operations: []

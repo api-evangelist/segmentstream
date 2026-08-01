@@ -1,0 +1,35 @@
+generated: '2026-07-21'
+method: searched
+source: >-
+  https://mcp.segmentstream.com/.well-known/oauth-authorization-server +
+  https://docs.segmentstream.com/mcp/getting-started
+docs: https://docs.segmentstream.com/mcp/getting-started
+summary:
+  types: [oauth2]
+  oauth2_flows: [authorizationCode]
+  pkce: [S256]
+  dynamic_client_registration: true
+  token_endpoint_auth_methods: [none]     # public client (PKCE)
+schemes:
+  - name: OAuth2
+    type: oauth2
+    description: >-
+      SegmentStream's MCP server is a public OAuth 2.0 client using the
+      authorization-code flow with PKCE (S256) and RFC 7591 dynamic client
+      registration. Sign-in happens in the browser and grants the agent the
+      same permissions as the signed-in SegmentStream user (read-only reporting
+      by default). Discoverable via RFC 8414 / RFC 9728 metadata.
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://mcp.segmentstream.com/oauth/authorize
+        tokenUrl: https://mcp.segmentstream.com/oauth/token
+        registrationUrl: https://mcp.segmentstream.com/oauth/register
+    bearer_methods: [header]
+    resource: https://mcp.segmentstream.com/mcp
+    sources:
+      - well-known/segmentstream-oauth-authorization-server.json
+      - well-known/segmentstream-oauth-protected-resource.json
+notes: >-
+  No public REST OpenAPI is published (docs reference an openapi.json that
+  currently 404s), so this profile is derived from the OAuth discovery metadata
+  the MCP server publishes rather than from an OpenAPI securitySchemes block.

@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: generated
+source: mcp/segmentstream-mcp.yml (tool names verified against docs.segmentstream.com/mcp/supported-tools)
+skills:
+  - file: segmentstream-measure-and-optimize-spend.md
+    name: Measure attribution and optimize ad spend
+    api: mcp/segmentstream-mcp.yml
+    operations: [list_active_projects, get_project, run_report, run_report_timeseries, list_portfolios, get_portfolio_optimization, get_portfolio_history]
+  - file: segmentstream-run-geo-incrementality-test.md
+    name: Read geo-incrementality experiment results
+    api: mcp/segmentstream-mcp.yml
+    operations: [list_active_projects, list_experiments, get_experiment, list_experiment_custom_parameter_keys]
+  - file: segmentstream-configure-conversions.md
+    name: Configure conversions and query performance
+    api: mcp/segmentstream-mcp.yml
+    operations: [list_active_projects, list_conversions, get_conversion, create_conversion, list_conversion_fields, get_conversion_statistics, get_conversions_by_country]
