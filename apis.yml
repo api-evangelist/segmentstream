@@ -17,8 +17,11 @@ x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - techstars
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: >-
+  Promoted from stub on 2026-08-13. Two rounds of enrichment established a real
+  first-party agent surface (hosted MCP server, A2A agent card, published Agent
+  Skill) plus pricing, CLI, changelog and error artifacts.
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -33,7 +36,7 @@ accessModel:
   method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-08-13'
 image: https://segmentstream.com/images/og-image.png
 tags:
 - Company
@@ -120,8 +123,29 @@ common:
   url: https://segmentstream.com/trust
 - type: AgentSkill
   url: skills/_index.yml
+- type: AgentCard
+  name: SegmentStream A2A agent card
+  url: a2a/segmentstream-a2a.yml
+- type: CLI
+  name: SegmentStream CLI
+  url: cli/segmentstream-cli.yml
+- type: ChangeLog
+  name: SegmentStream product updates
+  url: changelog/segmentstream-changelog.yml
+- type: Plans
+  url: plans/segmentstream-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/segmentstream-rate-limits.yml
+- type: ErrorCatalog
+  url: errors/segmentstream-error-codes.yml
+- type: Components
+  name: SegmentStream SDK and embedded components
+  url: components/segmentstream-components.yml
+x-coverage:
+  state: covered
+  checked: '2026-08-13'
 x-enrichment:
-  date: '2026-07-21'
+  date: '2026-08-13'
   status: enriched
-  artifacts_added: 13
+  artifacts_added: 9
   pass: local-v1
