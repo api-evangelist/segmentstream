@@ -1,8 +1,19 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: >-
-  npm registry (@segmentstream scope) + github.com/segmentstream org; the docs
-  reference a tracker "SDK installation" step (Digital Data Manager).
+  registry.npmjs.org (@segmentstream scope + named lookups),
+  api.github.com/orgs/segmentstream/repos,
+  https://docs.segmentstream.com/project-configuration/sdk,
+  https://segmentstream.com/cli, https://segmentstream.com/cloud
+summary: >-
+  SegmentStream ships no maintained language SDK. Every first-party package that
+  reached a registry or a public repository has been archived, and the one npm
+  package that still resolves last shipped in 2019 — six and a half years before
+  the MCP server it would have to wrap. The live client surface is a
+  CDN-distributed browser tracker with no version pin, and the two packages the
+  provider currently markets (the CLI and the Cloud TypeScript SDK) are not
+  published anywhere. The programmatic surface an integrator actually uses is
+  the hosted MCP server (mcp/segmentstream-mcp.yml).
 packages:
   - language: javascript
     registry: npm
@@ -10,28 +21,156 @@ packages:
     url: https://www.npmjs.com/package/@segmentstream/utils
     install: npm install @segmentstream/utils
     official: true
+    version: 1.0.15
+    published: '2019-10-25'
+    release_count: 10
+    status: abandoned
+    source_repo: https://github.com/segmentstream/utils
+    repo_archived: true
+    repo_last_push: '2023-01-12'
+    note: >-
+      The only first-party SegmentStream package on any public registry. Latest
+      release 1.0.15 (2019-10-25); its GitHub repository is archived. It predates
+      the MCP server (launched 2026-02-25) by more than six years and wraps
+      nothing in the current product.
+  - language: javascript
+    registry: cdn
+    name: segmentstream.min.js
+    url: https://cdn.segmentstream.com/sdk/v1/segmentstream.min.js
+    install: >-
+      <script async src="https://cdn.segmentstream.com/sdk/v1/segmentstream.min.js"></script>
+    official: true
+    version: null
+    published: null
+    status: live
+    docs: https://docs.segmentstream.com/project-configuration/sdk
+    probe:
+      http_status: 200
+      content_type: application/javascript
+      bytes: 80463
+      checked: '2026-08-13'
+    note: >-
+      The current, generally-available browser tracker. Distributed only from
+      SegmentStream's own CDN — there is no metadata endpoint to query and no
+      npm mirror. The URL pins the major version path (/sdk/v1/) but nothing
+      finer, so it floats to the latest v1 build: version and published are null
+      because the distribution genuinely does not expose them, and a consumer
+      cannot determine which build they are serving either. No subresource
+      integrity hash is published with the snippet.
   - language: javascript
     registry: github
     name: digital-data-manager
     url: https://github.com/segmentstream/digital-data-manager
+    official: true
+    version: null
+    published: null
+    status: archived
+    repo_archived: true
+    repo_last_push: '2022-12-06'
+    npm: absent
     description: >-
-      Open-source browser data-collection / dataLayer manager library
-      (SegmentStream tracker) used to feed events into attribution.
-    official: true
-  - language: javascript
-    registry: github
-    name: dbex-sdk
-    url: https://github.com/segmentstream/dbex-sdk
-    description: Driveback Experiments SDK.
-    official: true
+      Open-source browser data-collection / dataLayer manager library, the
+      predecessor of the current SegmentStream tracker.
+    note: >-
+      Archived on GitHub and never published under a resolvable npm name
+      (digital-data-manager and @segmentstream/digital-data-manager both 404 on
+      registry.npmjs.org, checked 2026-08-13). Superseded by the CDN tracker.
   - language: typescript
     registry: github
     name: argo-client-node
     url: https://github.com/segmentstream/argo-client-node
-    description: Argo client for Node generated from an OpenAPI specification.
     official: true
-notes: >-
-  No first-party SegmentStream package found on PyPI, Maven Central, NuGet,
-  RubyGems, Packagist, or crates.io (checked 2026-07-21). The primary
-  programmatic surface is the hosted MCP server (mcp/segmentstream-mcp.yml),
-  not a language SDK.
+    version: null
+    published: null
+    status: archived
+    repo_archived: true
+    repo_last_push: '2021-11-19'
+    description: Argo client for Node, generated from an OpenAPI specification.
+    note: >-
+      Notable only as evidence that SegmentStream once generated clients from an
+      OpenAPI document internally. No such specification is published today.
+  - language: javascript
+    registry: github
+    name: dbex-sdk
+    url: https://github.com/segmentstream/dbex-sdk
+    official: true
+    version: null
+    published: null
+    status: archived
+    repo_archived: true
+    repo_last_push: '2017-03-21'
+    description: Driveback Experiments SDK, from the company's pre-SegmentStream era.
+  - language: r
+    registry: github
+    name: GeoLift
+    url: https://github.com/segmentstream/GeoLift
+    official: false
+    version: null
+    published: null
+    status: fork
+    repo_archived: false
+    repo_last_push: '2026-07-16'
+    description: >-
+      End-to-end geo-experimental methodology package, underpinning the
+      incrementality-testing product.
+    note: >-
+      The most recently touched repository in the org, but it is not a
+      SegmentStream client library — GeoLift originates with Meta's Marketing
+      Science team. Marked official: false because SegmentStream is not the
+      author.
+  - language: go
+    registry: github
+    name: axprobe
+    url: https://github.com/segmentstream/axprobe
+    official: true
+    version: null
+    published: null
+    status: active
+    repo_archived: false
+    repo_last_push: '2026-06-25'
+    description: >-
+      Single-binary harness that drives a CLI inside a disposable environment.
+    note: Internal tooling, not a client library for the SegmentStream API.
+announced_not_published:
+  - name: "@segmentstream/cli"
+    registry: npm
+    install: npm i -g @segmentstream/cli
+    source: https://segmentstream.com/cloud.md
+    version: null
+    published: null
+    probe:
+      url: https://registry.npmjs.org/@segmentstream/cli
+      http_status: 404
+      checked: '2026-08-13'
+    note: >-
+      Shown in the Cloud provisioning walkthrough, labeled "CLI preview —
+      commands may change before GA". Not on npm. The alternative published
+      install path, curl -fsSL https://segmentstream.com/cli/install.sh | sh,
+      also 404s. See cli/segmentstream-cli.yml.
+  - name: SegmentStream Cloud TypeScript SDK
+    registry: npm
+    source: https://segmentstream.com/cloud
+    version: null
+    published: null
+    probe:
+      url: https://registry.npmjs.org/@segmentstream/sdk
+      http_status: 404
+      checked: '2026-08-13'
+    note: >-
+      Marketed as "REST API & SDK" and "React components and a typed SDK" for
+      the white-label product, which is at design-partner/waitlist stage. No
+      package name, registry entry or reference documentation published.
+registries_checked:
+  - {registry: npm, result: '@segmentstream/utils only; scope search returned 0 other packages'}
+  - {registry: pypi, result: none}
+  - {registry: maven-central, result: none}
+  - {registry: nuget, result: none}
+  - {registry: rubygems, result: none}
+  - {registry: packagist, result: none}
+  - {registry: crates.io, result: none}
+  - {registry: pkg.go.dev, result: none}
+checked: '2026-08-13'
+cross_links:
+  components: components/segmentstream-components.yml
+  cli: cli/segmentstream-cli.yml
+  mcp: mcp/segmentstream-mcp.yml

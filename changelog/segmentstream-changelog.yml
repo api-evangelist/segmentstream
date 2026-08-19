@@ -1,0 +1,69 @@
+generated: '2026-08-13'
+method: searched
+source: https://segmentstream.com/blog/product-updates
+docs: https://segmentstream.com/blog/product-updates
+scheme: dated-blog-posts
+detail: >-
+  SegmentStream has no developer changelog. Product changes are announced as
+  dated posts in the "Product Updates" category of the marketing blog, written
+  for marketers rather than integrators — they carry no version number, no
+  breaking-change flag, and no per-endpoint or per-tool diff. docs.segmentstream.com/changelog
+  and segmentstream.com/changelog both return 404.
+versioned: false
+current_version: null
+breaking_change_policy: null
+entries:
+  - title: What's new in SegmentStream — May '26
+    date: '2026-05-18'
+    url: https://segmentstream.com/blog/product-updates/may-2026-product-update
+    breaking: false
+    additions:
+      - Predictive Cross-Channel Attribution
+      - Self-Reported Attribution surfaced inside every User Journey
+      - Adobe Analytics integration
+      - Snowflake integration
+    highlights: Plus assorted UI enhancements.
+  - title: Visit Scoring is becoming Predictive Attribution
+    date: '2026-05-06'
+    url: https://segmentstream.com/blog/product-updates/visit-scoring-becomes-predictive-attribution
+    breaking: false
+    renaming: true
+    additions:
+      - >-
+        The machine-learning capability previously shipped as the standalone
+        Visit Scoring attribution model becomes an additional layer that applies
+        across all attribution models.
+    highlights: >-
+      A product rename with a behaviour change. Agents and integrations that
+      referenced the "visit-scoring" model by name are the population affected,
+      but no deprecation notice, sunset date or migration note was published
+      alongside it.
+  - title: Introducing the SegmentStream MCP Server
+    date: '2026-02-25'
+    url: https://segmentstream.com/blog/product-updates/introducing-segmentstream-mcp-server
+    breaking: false
+    additions:
+      - >-
+        Hosted Model Context Protocol server at https://mcp.segmentstream.com/mcp,
+        letting AI assistants connect to and act through the measurement and
+        optimization engine.
+    highlights: The launch of the provider's primary agent surface.
+gaps:
+  - >-
+    No entry records a change to the MCP tool surface itself. The server exposes
+    ~63 tools (mcp/segmentstream-mcp.yml) and there is no published record of
+    when a tool was added, renamed, or removed — the highest-value missing
+    signal for an agent integrator, since tool names are the call contract.
+  - >-
+    No RSS/Atom feed or machine-readable changelog was found for the product
+    updates category.
+cross_links:
+  lifecycle: lifecycle/segmentstream-lifecycle.yml
+  mcp: mcp/segmentstream-mcp.yml
+evidence:
+  - url: https://segmentstream.com/blog/product-updates
+    http_status: 200
+  - url: https://segmentstream.com/changelog
+    http_status: 404
+  - url: https://docs.segmentstream.com/changelog
+    http_status: 404

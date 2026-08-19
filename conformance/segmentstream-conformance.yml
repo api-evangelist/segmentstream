@@ -1,8 +1,10 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: >-
   https://mcp.segmentstream.com/.well-known/oauth-authorization-server +
-  https://docs.segmentstream.com/mcp + https://segmentstream.com/trust
+  https://docs.segmentstream.com/.well-known/agent-card.json +
+  https://docs.segmentstream.com/mcp + https://segmentstream.com/trust +
+  live probes on 2026-08-13
 standards:
   - id: oauth2
     conforms: true
@@ -22,12 +24,78 @@ standards:
   - id: model-context-protocol
     conforms: true
     evidence: hosted MCP server at https://mcp.segmentstream.com/mcp (Streamable HTTP + SSE)
+  - id: jsonrpc-2.0
+    conforms: true
+    evidence: >-
+      MCP transport returns a conformant JSON-RPC 2.0 error object
+      ({"jsonrpc":"2.0","error":{"code":-32600,...},"id":null}) on an
+      unauthenticated tools/list
+  - id: a2a-agent-card
+    conforms: partial
+    evidence: >-
+      A2A agent card served at the canonical
+      https://docs.segmentstream.com/.well-known/agent-card.json (200,
+      application/json). Passes all three A2A 1.0.0 hard checks but declares
+      transports under the pre-1.0 `supportedInterfaces` key and pins
+      protocolVersion 0.3 — graded `flavored`. See a2a/segmentstream-a2a.yml.
+  - id: agent-skills
+    conforms: true
+    evidence: >-
+      Provider-published Agent Skill served at
+      /.well-known/agent-skills/segmentstream/skill.md (200, text/markdown) and
+      advertised from the agent card
+  - id: llmstxt
+    conforms: true
+    evidence: >-
+      llms.txt published on both the docs host (86 pages) and the marketing
+      apex; docs also serve llms-full.txt, and legal pages are mirrored as .md
+      with robots.txt rules that keep the .md fetchable for agents
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on every host
   - id: openid-connect
     conforms: false
     evidence: no /.well-known/openid-configuration (404); OAuth-only, no id_token
+  - id: openapi
+    conforms: false
+    evidence: >-
+      No OpenAPI is published. The document linked from llms.txt at
+      /api-reference/openapi.json is the stock Mintlify "OpenAPI Plant Store"
+      sample (servers[] http://sandbox.mintlify.com) and does not describe
+      SegmentStream — see conventions/segmentstream-conventions.yml
+      contract_discovery.rejected
+  - id: graphql-introspection
+    conforms: false
+    evidence: >-
+      An Apollo GraphQL server exists at api.segmentstream.com/v1/graphql but
+      introspection is refused without an API key (UNAUTHENTICATED); no SDL is
+      published
+  - id: asyncapi
+    conforms: false
+    evidence: no event surface published; no consumer-subscribable webhooks
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      No application/problem+json anywhere; errors use JSON-RPC 2.0 and the
+      Apollo GraphQL errors array
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: no deprecation policy or Sunset header support found
   - id: gdpr
     conforms: true
     evidence: trust center documents GDPR / UK GDPR / CCPA / PIPEDA / LGPD compliance program
   - id: soc2
     conforms: partial
     evidence: trust center states controls are "aligned with SOC 2 principles", monitored via Drata (not a stated attestation)
+  - id: hsts
+    conforms: partial
+    evidence: >-
+      HSTS enabled with max-age 63072000 on segmentstream.com and
+      docs.segmentstream.com, but NOT on mcp.segmentstream.com — the host that
+      carries the OAuth flow and every agent request
+  - id: dnssec
+    conforms: false
+    evidence: segmentstream.com is not DNSSEC-signed; no CAA records published
+  - id: dmarc
+    conforms: true
+    evidence: SPF present; DMARC published with policy p=reject

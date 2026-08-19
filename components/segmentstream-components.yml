@@ -1,0 +1,96 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.segmentstream.com/project-configuration/sdk +
+  https://segmentstream.com/cloud
+detail: >-
+  SegmentStream ships client-side surfaces in two families: a browser tracker
+  distributed from its own CDN, and — for the white-label Cloud product — an
+  embeddable measurement module plus React components and a typed TypeScript
+  SDK. Only the tracker is generally available; the Cloud component library is
+  behind a design-partner waitlist and no package or documentation URL for it
+  has been published.
+families:
+  - family: tracker
+    name: SegmentStream SDK
+    kind: browser-javascript
+    availability: general
+    docs: https://docs.segmentstream.com/project-configuration/sdk
+    distribution:
+      registry: cdn
+      url: https://cdn.segmentstream.com/sdk/v1/segmentstream.min.js
+      pinned: false
+      version: null
+      probe:
+        http_status: 200
+        content_type: application/javascript
+        bytes: 80463
+        checked: '2026-08-13'
+      note: >-
+        The documented URL pins only a major-version path segment (/sdk/v1/), so
+        the artifact served floats to whatever the current v1 build is. There is
+        no npm package, no integrity hash in the published snippet, and no
+        version string in the URL — a consumer cannot state which build they are
+        running, and neither can we. Recorded as version: null deliberately.
+    loader_snippet: |
+      <script>(function(){var s=window.segmentstream=window.segmentstream||{};
+      s._q=s._q||[];['init','conversion','anonymousId'].forEach(function(m){
+      s[m]=function(){s._q.push([m,Array.prototype.slice.call(arguments)])}})})();</script>
+      <script async src="https://cdn.segmentstream.com/sdk/v1/segmentstream.min.js"></script>
+      <script>segmentstream.init("PROJECT_ID");</script>
+    methods:
+      - name: segmentstream.init
+        signature: init(projectId)
+        description: Initializes the SDK with the project identifier.
+      - name: segmentstream.conversion
+        signature: conversion({type, id, value, currency})
+        description: Reports a conversion event directly.
+      - name: segmentstream.anonymousId
+        signature: anonymousId()
+        description: >-
+          Returns the user identifier — the Google Analytics cookie value where
+          present, otherwise a generated id.
+    options:
+      - name: click_id_propagation
+        default: true
+        description: Preserves ad-platform click IDs across internal links.
+      - name: cookieless_pings
+        default: true
+        description: Sends page-load and first-interaction signals without analytics cookies.
+      - name: local_storage
+        default: false
+        description: Stores attribution data in local storage.
+    capabilities:
+      - >-
+        Preserves click IDs across navigation: gclid, fbclid, ttclid, msclkid,
+        li_fat_id, ScCid, rdt_cid, twclid, dclid, epik.
+      - Cookieless page-load and first-interaction pings.
+      - Direct conversion reporting.
+  - family: embedded-ui
+    name: SegmentStream Cloud measurement module
+    kind: white-label-embedded
+    availability: waitlist
+    docs: https://segmentstream.com/cloud
+    description: >-
+      The full measurement UI embedded inside a customer's own product under the
+      customer's brand. Described as "Not an iframe — React components and a
+      typed SDK", so a host application composes its own layout and design
+      system around the engine's data.
+    surfaces:
+      - White-label measurement module
+      - React components
+      - TypeScript SDK
+      - REST API
+      - MCP server per workspace
+      - Hosted dashboard workspaces
+    regions: [EU, US]
+    isolation: workspace-per-client
+    package: null
+    note: >-
+      No package name, registry entry, component reference or API reference has
+      been published for this family. @segmentstream/sdk is not on npm (HTTP 404,
+      checked 2026-08-13). Recorded as an announced surface, not an available
+      one.
+cross_links:
+  packages: packages/segmentstream-packages.yml
+  cli: cli/segmentstream-cli.yml

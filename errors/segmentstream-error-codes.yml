@@ -1,0 +1,118 @@
+generated: '2026-08-13'
+method: probed
+source: >-
+  live unauthenticated requests to https://mcp.segmentstream.com/mcp and
+  https://api.segmentstream.com/v1/graphql on 2026-08-13
+format: mixed
+detail: >-
+  SegmentStream publishes no error reference. There is no error-code page in the
+  documentation set, no OpenAPI to derive 4xx/5xx responses from, and nothing
+  served as application/problem+json — so this catalogue is built only from
+  error envelopes actually observed on the wire from unauthenticated probes. It
+  is deliberately short: it records the shapes an agent will really encounter at
+  the auth boundary, and nothing beyond them. The authenticated error surface
+  could not be observed and is not guessed at.
+rfc9457: false
+envelopes:
+  - surface: mcp
+    endpoint: https://mcp.segmentstream.com/mcp
+    format: jsonrpc-2.0-error
+    shape: '{"jsonrpc":"2.0","error":{"code":<int>,"message":<string>},"id":<id|null>}'
+    note: >-
+      Standard JSON-RPC 2.0 error object, as required by the Model Context
+      Protocol. The MCP transport carries its own code space (negative integers)
+      independent of the HTTP status.
+  - surface: graphql
+    endpoint: https://api.segmentstream.com/v1/graphql
+    format: graphql-errors
+    shape: '{"errors":[{"message":<string>,"extensions":{"code":<string>}}]}'
+    note: >-
+      Apollo Server error envelope. The machine-readable discriminator is
+      extensions.code; the HTTP status is not a reliable signal here (an
+      UNAUTHENTICATED response was returned with HTTP 500).
+errors:
+  - surface: mcp
+    http_status: 401
+    code: -32600
+    code_space: jsonrpc
+    title: Authorization header is required
+    message: Authorization header is required
+    cause: >-
+      A JSON-RPC request (including tools/list) was sent to the MCP endpoint
+      without a bearer token.
+    remediation: >-
+      Complete the OAuth 2.0 authorization-code + PKCE flow documented at
+      authentication/segmentstream-authentication.yml and resend with an
+      Authorization: Bearer header.
+    observed:
+      request: POST tools/list, no Authorization header
+      url: https://mcp.segmentstream.com/mcp
+      content_type: application/json; charset=utf-8
+    note: >-
+      -32600 is the JSON-RPC "Invalid Request" code. The condition is missing
+      authentication, so a client keying on the code alone will read this as a
+      malformed request rather than an auth failure; the HTTP 401 is the
+      reliable signal.
+  - surface: graphql
+    http_status: 500
+    code: UNAUTHENTICATED
+    code_space: graphql-extensions
+    title: Missing or invalid api key
+    message: Missing or invalid api key
+    cause: A GraphQL operation was sent without a valid API key.
+    remediation: >-
+      Supply the API key the GraphQL surface expects. SegmentStream publishes no
+      documentation for this endpoint or for how a key is issued — see the
+      gated-surface note below.
+    observed:
+      request: POST {"query":"query{__schema{queryType{name}}}"}
+      url: https://api.segmentstream.com/v1/graphql
+    note: >-
+      Returned with HTTP 500 rather than 401/403. An agent implementing retry
+      logic on 5xx will retry an unauthenticated request indefinitely, because
+      the status says "server error" while the body says "your credentials are
+      wrong". This is the single most actionable defect in the observed error
+      surface.
+  - surface: graphql
+    http_status: 400
+    code: BAD_REQUEST
+    code_space: graphql-extensions
+    title: Blocked as a potential Cross-Site Request Forgery (CSRF)
+    message: >-
+      This operation has been blocked as a potential Cross-Site Request Forgery
+      (CSRF). Please either specify a 'content-type' header (with a type that is
+      not one of application/x-www-form-urlencoded, multipart/form-data,
+      text/plain) or provide a non-empty value for one of the following headers:
+      x-apollo-operation-name, apollo-require-preflight
+    cause: >-
+      A request reached the GraphQL server without a content-type that clears
+      Apollo's CSRF prevention and without an x-apollo-operation-name or
+      apollo-require-preflight header.
+    remediation: >-
+      Send content-type: application/json, or set apollo-require-preflight.
+    observed:
+      request: GET /v1/openapi.json (no content-type)
+      url: https://api.segmentstream.com/v1/openapi.json
+    note: >-
+      Apollo Server's built-in CSRF prevention. Its presence is what identified
+      api.segmentstream.com as an Apollo GraphQL server in the first place.
+gated_surfaces:
+  - surface: mcp tools/list
+    url: https://mcp.segmentstream.com/mcp
+    status: auth-gated
+    detail: >-
+      Live tool schemas (the MCP equivalent of OpenAPI parameters) require an
+      authenticated introspection. The tool names and descriptions in
+      mcp/segmentstream-mcp.yml come from the published documentation, not from
+      a tools/list response.
+  - surface: graphql introspection
+    url: https://api.segmentstream.com/v1/graphql
+    status: api-key-gated
+    detail: >-
+      Introspection is refused without an API key, so no SDL could be captured.
+      No schema has been written to graphql/ — an unobtainable schema is
+      recorded as absent, never reconstructed.
+cross_links:
+  authentication: authentication/segmentstream-authentication.yml
+  conventions: conventions/segmentstream-conventions.yml
+  rate_limits: rate-limits/segmentstream-rate-limits.yml

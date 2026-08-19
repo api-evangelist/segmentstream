@@ -1,9 +1,14 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
-source: https://docs.segmentstream.com/mcp + OAuth discovery metadata
+source: >-
+  https://docs.segmentstream.com/mcp + OAuth discovery metadata + live probes of
+  every SegmentStream host on 2026-08-13
 summary: >-
   SegmentStream's primary programmatic surface is a hosted MCP server, not a
   classic REST API, so cross-cutting semantics are expressed in MCP tool terms.
+  A second, undocumented surface exists — an Apollo GraphQL API at
+  api.segmentstream.com/v1/graphql — but it is API-key gated with no public
+  reference, so it contributes no conventions an integrator could rely on.
 authentication:
   style: oauth2
   detail: >-
@@ -19,19 +24,129 @@ access_model:
     access (bigquery_execute_sql) is read-only against the project dataset.
 idempotency:
   supported: false
-  detail: No documented idempotency-key mechanism.
+  detail: >-
+    No idempotency-key mechanism is documented anywhere in the 86-page
+    documentation set or in the MCP tool reference. This matters more than usual
+    here: the surface is agent-driven, and mutating tools (create_project,
+    create_conversion, create_attribution_model, invite_teammate,
+    connect_data_source) have no published way for a retrying agent to avoid
+    duplicating the effect. No Idempotency pointer is emitted.
 pagination:
+  supported: partial
+  style: limit-only
+  detail: >-
+    No cursor or offset convention is published. The MCP tool reference
+    documents a default `limit: 1000` on run_report, and a `format` option
+    (json/csv) on some queries to control response size. There is no documented
+    way to request the next page beyond that limit, and no total-count or
+    next-cursor field is described.
+sessions:
+  detail: >-
+    Most MCP tools take a `session_id` parameter. The documentation states "the
+    assistant handles this automatically — you do not need to manage session IDs
+    yourself", so it is client-managed conversational state rather than a
+    request-tracing identifier.
+request_tracing:
   supported: unknown
-  detail: Not documented publicly; MCP list_* tools return collections.
+  detail: No request-id or correlation header is documented on any surface.
+versioning:
+  scheme: unversioned-mcp
+  detail: >-
+    The MCP endpoint is served without a version segment. The GraphQL surface is
+    path-versioned at /v1/. See lifecycle/segmentstream-lifecycle.yml.
+error_semantics:
+  detail: >-
+    Two distinct error envelopes are in use — JSON-RPC 2.0 on MCP and the Apollo
+    GraphQL errors array on the API host. Neither is RFC 9457. Operational
+    errors also surface through the list_incidents, get_data_source_logs and
+    get_workflow_status tools. Catalogued from live probes at
+    errors/segmentstream-error-codes.yml.
+rate_limit_signaling:
+  supported: false
+  detail: >-
+    No published limits and no RateLimit-*/Retry-After headers. See
+    rate-limits/segmentstream-rate-limits.yml.
 data_warehouse:
   detail: >-
     Data lands in BigQuery — either a SegmentStream-hosted warehouse or the
     customer's own Google BigQuery instance; SQL is queryable through MCP tools.
-error_semantics:
+    The CLI extends this to Snowflake and Databricks.
+contract_discovery:
+  checked: '2026-08-13'
+  result: no-published-contract
   detail: >-
-    Errors surface as MCP tool errors and via list_incidents /
-    get_data_source_logs / get_workflow_status. No published RFC 9457 catalog.
+    Full STEP 0b sweep against every host. No OpenAPI, no AsyncAPI, no GraphQL
+    SDL and no MCP tools/list manifest could be obtained. The two things that
+    look like contracts are both dead ends, documented below so a later round
+    does not re-litigate them.
+  rejected:
+    - url: https://docs.segmentstream.com/api-reference/openapi.json
+      http_status: 200
+      content_type: application/json
+      parses_as_openapi: true
+      openapi_version: 3.1.0
+      verdict: REJECTED — belongs to a different party
+      reason: >-
+        This is the stock Mintlify sample specification, not SegmentStream's
+        API. info.title is "OpenAPI Plant Store", the description reads "A
+        sample API that uses a plant store as an example to demonstrate features
+        in the OpenAPI specification", and servers[] is
+        http://sandbox.mintlify.com. It is scaffolding left in the Mintlify
+        docs configuration. SegmentStream's own llms.txt links it under a
+        "## OpenAPI Specs" heading, so any harvester that trusts the link — or
+        trusts the fetch URL because it sits on the provider's own docs domain —
+        will attribute a plant-store CRUD API to a marketing attribution
+        company. Not saved, and nothing is derived from it.
+      note: >-
+        docs.segmentstream.com/api-reference and /api-reference/introduction
+        both return 404, and the docs sitemap contains no api-reference entry:
+        the section was never built out.
+  gated:
+    - surface: graphql
+      url: https://api.segmentstream.com/v1/graphql
+      server: Apollo Server
+      http_status: 500
+      body: '{"errors":[{"message":"Missing or invalid api key","extensions":{"code":"UNAUTHENTICATED"}}]}'
+      detail: >-
+        A real first-party GraphQL API on SegmentStream's own domain, previously
+        unrecorded. Introspection is refused without an API key, so no SDL was
+        captured and none is reconstructed. It is entirely undocumented — no
+        reference page, no key-issuance flow, and no mention in the docs or
+        llms.txt. Its existence was inferred from the Apollo CSRF-prevention
+        error returned to an unrelated probe.
+    - surface: mcp
+      url: https://mcp.segmentstream.com/mcp
+      http_status: 401
+      detail: >-
+        tools/list requires an Authorization header, so live inputSchema values
+        are unavailable. Tool names and descriptions come from the published
+        reference only.
+  negative:
+    - {url: 'https://segmentstream.com/openapi.json', http_status: 404}
+    - {url: 'https://docs.segmentstream.com/openapi.json', http_status: 404}
+    - {url: 'https://api.segmentstream.com/openapi.json', http_status: 404}
+    - {url: 'https://api.segmentstream.com/swagger.json', http_status: 404}
+    - {url: 'https://api.segmentstream.com/graphql', http_status: 404}
+  false_positive_host:
+    host: https://app.segmentstream.com
+    detail: >-
+      SPA catch-all returns HTTP 200 with an identical 630-byte HTML shell for
+      /openapi.json, /swagger.json, /api-docs and every /.well-known/* path.
+      Every 200 from this host is a miss.
+event_surface:
+  webhooks: false
+  asyncapi: false
+  detail: >-
+    No consumer-subscribable webhooks and no AsyncAPI. The nearest thing is
+    Conversions Export / Server-Side Conversion Tracking, which forwards
+    conversion signals outbound from SegmentStream to ad platforms (Google Ads,
+    Meta, GA4, LinkedIn) on a schedule. That is an outbound integration
+    SegmentStream operates, not an event surface a customer can subscribe to, so
+    no Webhooks or AsyncAPI pointer is emitted.
 cross_links:
   authentication: authentication/segmentstream-authentication.yml
   mcp: mcp/segmentstream-mcp.yml
   lifecycle: lifecycle/segmentstream-lifecycle.yml
+  errors: errors/segmentstream-error-codes.yml
+  rate_limits: rate-limits/segmentstream-rate-limits.yml
+  changelog: changelog/segmentstream-changelog.yml

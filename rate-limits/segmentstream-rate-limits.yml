@@ -1,0 +1,53 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.segmentstream.com/mcp/supported-tools +
+  https://docs.segmentstream.com/mcp/getting-started +
+  https://docs.segmentstream.com/llms.txt
+limit_count: 0
+limits: []
+headers: []
+status_code_on_exhaustion: null
+note: >-
+  SegmentStream publishes no rate limits. The full documentation set was walked
+  from https://docs.segmentstream.com/llms.txt (86 pages) and the MCP tool
+  reference at /mcp/supported-tools was read in full: there is no statement of a
+  request ceiling, a quota, a burst allowance, a throttling policy, a retry
+  policy, or any RateLimit-*/X-RateLimit-*/Retry-After response header, and no
+  documented status code on exhaustion. /rate-limits on the docs host returns
+  404. This is an honest zero, not an unchecked field — an agent driving the MCP
+  server has no published runtime signal telling it when to back off.
+observed_quotas:
+  - surface: run_report
+    kind: result-size
+    value: 1000
+    unit: rows
+    detail: >-
+      The MCP tool reference documents a default `limit: 1000` on run_report.
+      This is a pagination/result-size default, not a rate limit, and is
+      recorded here only so the distinction is explicit.
+    source: https://docs.segmentstream.com/mcp/supported-tools
+related_constraints:
+  - surface: bigquery_execute_sql
+    detail: >-
+      Queries run read-only against the project's BigQuery dataset, so the
+      effective ceiling is the customer's own Google BigQuery quota and slot
+      allocation rather than a SegmentStream-imposed limit. SegmentStream does
+      not document how it maps its callers onto those quotas.
+  - surface: attribution model creation
+    detail: >-
+      Creating or updating an attribution model triggers an automatic one-year
+      backfill that the docs say typically takes 15-30 minutes; reports return
+      no data until it completes. This is a latency constraint an agent must
+      tolerate, not a rate limit.
+    source: https://docs.segmentstream.com/.well-known/agent-skills/segmentstream/skill.md
+evidence:
+  - url: https://docs.segmentstream.com/rate-limits
+    http_status: 404
+  - url: https://docs.segmentstream.com/mcp/supported-tools
+    http_status: 200
+    finding: no rate-limit, quota, throttling, retry or idempotency statement
+cross_links:
+  plans: plans/segmentstream-plans-pricing.yml
+  conventions: conventions/segmentstream-conventions.yml
+  errors: errors/segmentstream-error-codes.yml

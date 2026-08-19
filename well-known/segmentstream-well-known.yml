@@ -1,6 +1,12 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
-source: live probes of SegmentStream hosts
+source: live probes of every SegmentStream host on 2026-08-13
+summary: >-
+  Three documents are genuinely served across the estate: the two OAuth
+  discovery documents on the MCP host, and an A2A agent card on the
+  documentation host. Everything else 404s. Note the split — the OAuth metadata
+  and the agent card live on different hosts, and neither is on the apex, so a
+  client that probes only segmentstream.com finds nothing.
 hosts:
   - host: https://mcp.segmentstream.com
     documents:
@@ -10,6 +16,43 @@ hosts:
       - path: /.well-known/oauth-protected-resource      # RFC 9728
         status: 200
         file: segmentstream-oauth-protected-resource.json
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://docs.segmentstream.com
+    documents:
+      - path: /.well-known/agent-card.json               # A2A
+        status: 200
+        file: ../a2a/segmentstream-agent-card.json
+        content_type: application/json
+        note: >-
+          Real A2A agent card, saved verbatim under a2a/ and described in
+          a2a/segmentstream-a2a.yml. It also advertises a provider-published
+          agent skill at
+          /.well-known/agent-skills/segmentstream/skill.md, which resolves
+          (200, text/markdown) and is saved at
+          skills/segmentstream-provider-skill.md.
+      - path: /.well-known/agent-skills/segmentstream/skill.md
+        status: 200
+        file: ../skills/segmentstream-provider-skill.md
+        content_type: text/markdown
+      - path: /.well-known/agent.json
+        status: 404
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
       - path: /.well-known/openid-configuration
         status: 404
   - host: https://segmentstream.com
@@ -24,7 +67,39 @@ hosts:
         status: 404
       - path: /.well-known/ai-plugin.json
         status: 404
-  - host: https://docs.segmentstream.com
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
+  - host: https://api.segmentstream.com
     documents:
+      - path: /.well-known/agent-card.json
+        status: 404
+      - path: /.well-known/agent.json
+        status: 404
       - path: /.well-known/security.txt
         status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+  - host: https://app.segmentstream.com
+    documents:
+      - path: /.well-known/*
+        status: 200
+        served: false
+        note: >-
+          EXCLUDED AS A FALSE POSITIVE. This host is a single-page app whose
+          catch-all answers HTTP 200 with the same 630-byte HTML shell for every
+          path probed, including /openapi.json, /swagger.json and every
+          /.well-known/* path. None of these is a document; a 200 here carries
+          no evidence and is recorded as a miss.
+security_txt: false
+security_txt_note: >-
+  No RFC 9116 security.txt is served on any host, so no SecurityTxt pointer is
+  emitted. segmentstream.com/security also returns 404 and no vulnerability
+  disclosure or bug bounty program was found — probe-security-programs.py
+  reported vdp=none on 2026-08-13.
+checked: '2026-08-13'

@@ -1,0 +1,123 @@
+generated: '2026-08-13'
+method: searched
+source: https://segmentstream.com/cli
+docs: https://segmentstream.com/cli
+name: SegmentStream CLI
+description: >-
+  A first-party command-line tool that runs the SegmentStream Measurement Engine
+  warehouse-natively — identity stitching, cross-channel attribution and
+  reporting execute against the customer's own BigQuery, Snowflake or Databricks
+  and the results are written straight back to that warehouse, so data never
+  leaves the customer's infrastructure. Configuration is a version-controlled
+  config.yaml plus sources/, destinations/, transformations/ and
+  attribution_models/ directories.
+status: private-beta
+availability:
+  label: Private beta — request access
+  self_serve: false
+  note: >-
+    The page is headed "SegmentStream CLI · Private beta" and the primary call
+    to action is "Request access", so the binary is not generally available.
+license_claim: >-
+  The page describes it as "An open-source CLI for warehouse-native marketing
+  attribution", but no public repository was found — github.com/segmentstream
+  lists 13 repos and none of them is this CLI (checked 2026-08-13).
+install:
+  - method: shell-script
+    command: curl -fsSL https://segmentstream.com/cli/install.sh | sh
+    source: https://segmentstream.com/cli
+    verified: false
+    probe:
+      url: https://segmentstream.com/cli/install.sh
+      http_status: 404
+      checked: '2026-08-13'
+    note: >-
+      The install command published on the CLI page does not resolve — the
+      script it pipes to sh returns HTTP 404 ("Not Found", 9 bytes). Consistent
+      with the private-beta gate, but it means the documented install path is
+      currently non-functional for the public.
+  - method: npm
+    command: npm i -g @segmentstream/cli
+    source: https://segmentstream.com/cloud.md
+    verified: false
+    probe:
+      url: https://registry.npmjs.org/@segmentstream/cli
+      http_status: 404
+      checked: '2026-08-13'
+    note: >-
+      Shown in the SegmentStream Cloud provisioning walkthrough, explicitly
+      labeled "CLI preview — commands may change before GA". The package is not
+      published to npm.
+commands:
+  - command: segmentstream init
+    group: project
+    description: >-
+      Scaffolds config.yaml and the folders where sources, destinations,
+      transformations and attribution models live.
+    output_example: >-
+      Created config.yaml; created sources/ and destinations/; created
+      transformations/ and attribution_models/.
+  - command: segmentstream auth add <warehouse>
+    group: auth
+    description: >-
+      Authenticates a warehouse connection. config.yaml stores only the
+      credential's name; the secret goes to the OS keychain or a gitignored
+      .env.
+    arguments:
+      - name: warehouse
+        values: [bigquery, snowflake, databricks]
+    auth_methods:
+      - warehouse: bigquery
+        method: oauth-browser
+        secret_storage: none-required
+      - warehouse: databricks
+        method: oauth-browser
+        secret_storage: os-keychain
+      - warehouse: snowflake
+        method: username-password
+        secret_storage: gitignored-dotenv
+  - command: segmentstream run
+    group: pipeline
+    description: >-
+      Runs the full pipeline — identity stitching, attribution and reporting —
+      and writes results back to the warehouse.
+  - command: segmentstream run --workflow <name>
+    group: pipeline
+    description: "Runs a single named workflow (example shown: refresh)."
+    source: https://segmentstream.com/cloud.md
+    status: preview
+  - command: segmentstream workspaces create <name> --region <region>
+    group: cloud
+    description: "Provisions a SegmentStream Cloud workspace in a region (example: eu)."
+    source: https://segmentstream.com/cloud.md
+    status: preview
+  - command: segmentstream deploy
+    group: cloud
+    description: Deploys segmentstream.yml (sources and models) to a Cloud workspace.
+    source: https://segmentstream.com/cloud.md
+    status: preview
+configuration:
+  file: config.yaml
+  version_controlled: true
+  directories: [sources/, destinations/, transformations/, attribution_models/]
+  source_types: [events, costs, conversions]
+  built_in_attribution_models:
+    - first_click
+    - last_click
+    - linear
+    - position_based
+    - predictive
+  custom_models: >-
+    A custom model is a directory under attribution_models/ containing model.sql
+    and is referenced by name from config.yaml.
+  warehouses: [bigquery, snowflake, databricks]
+cross_links:
+  packages: packages/segmentstream-packages.yml
+  authentication: authentication/segmentstream-authentication.yml
+notes: >-
+  Distinct from the hosted platform: the CLI is the self-hosted, bring-your-own
+  warehouse form of the same engine, whereas mcp/segmentstream-mcp.yml is the
+  hosted agent surface. Neither install path could be verified as of
+  2026-08-13 — both the shell installer and the npm package are absent — so
+  every command above is recorded from the provider's own published examples
+  and none was executed.

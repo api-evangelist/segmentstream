@@ -1,24 +1,14 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 probe: true
 source: https://segmentstream.com/trust
 url: https://segmentstream.com/trust
-monitoring: Drata (automated security monitoring and compliance tracking)
 certifications:
-- SOC 2 (aligned with principles, monitored via Drata; not a stated attestation)
+- SOC 2
 - GDPR
-- UK GDPR
-- CCPA
-- PIPEDA
-- LGPD
-- Swiss DPA
-data_processing_agreement: https://segmentstream.com/dpa
-sub_processors: Annex D of the DPA
 evidence:
 - source: https://segmentstream.com/trust
   keywords:
   - soc 2
   - trust center
   - gdpr
-  - ccpa
-  - drata

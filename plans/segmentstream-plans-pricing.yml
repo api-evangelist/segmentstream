@@ -1,0 +1,92 @@
+generated: '2026-08-13'
+method: searched
+source: https://segmentstream.com/pricing
+docs: https://segmentstream.com/pricing
+currency: USD
+billing_periods: [quarterly, annual]
+plan_count: 3
+pricing_model: >-
+  Three published plans, each sold in a Basic and a Pro variant on the same
+  engine. Prices are published as "from" floors, not as a rate card — no
+  per-unit price, included quota, or overage rate is stated on the pricing page,
+  so the numbers below are entry points rather than the full cost of a
+  deployment.
+plans:
+  - name: Online
+    delivery: Service-as-a-Software
+    price: 800
+    price_display: from $800/mo
+    currency: USD
+    period: month
+    billing: [quarterly, annual]
+    variants: [Basic, Pro]
+    included_quota: null
+    overage: null
+    features:
+      - Identity Graph
+      - Cross-Channel Attribution
+      - Predictive Attribution (Pro)
+      - Self-Reported Reattribution (Pro)
+      - Marginal Analytics (Pro)
+      - AI Agent and MCP access
+      - Marketing Measurement course
+      - Email support
+    add_ons:
+      - Incrementality Testing
+  - name: Full Funnel
+    delivery: Service-as-a-Software
+    price: 1200
+    price_display: from $1,200/mo
+    currency: USD
+    period: month
+    billing: [quarterly, annual]
+    variants: [Basic, Pro]
+    included_quota: null
+    overage: null
+    features:
+      - Everything in Online
+      - CRM and Warehouse Conversions
+      - CRM Funnel Attribution
+  - name: Enterprise
+    delivery: Human-Led
+    price: 5000
+    price_display: from $5,000/mo
+    currency: USD
+    period: month
+    billing: [annual]
+    variants: [Basic, Pro]
+    included_quota: null
+    overage: null
+    trial: 3-month paid proof of concept
+    features:
+      - Everything in Online and Full Funnel Pro
+      - Server-Side Conversion Tracking
+      - Incrementality Testing
+      - Automated Budget Allocation
+      - Advanced Security Assessment
+      - Priority SLA
+      - White-glove onboarding
+      - Dedicated Customer Success Manager
+      - Founder-led measurement expert (Pro)
+    note: >-
+      The page states pricing is "Custom-scoped to your security, compliance,
+      and measurement needs. Pricing scales with scope."
+adjacent_offerings:
+  - name: SegmentStream Cloud
+    url: https://segmentstream.com/cloud
+    pricing: Platform fee plus DPU / DQU usage-based metering
+    availability: waitlist / design partners
+    note: >-
+      The white-label embeddable engine. No published rate for the platform fee
+      or the DPU/DQU units, so it is not counted in plan_count.
+  - name: Measurement course
+    url: https://segmentstream.com/course
+    price: 299
+    currency: USD
+    period: one-time
+    note: 9.5 hours of video, lifetime access. Not an API plan.
+api_access_note: >-
+  MCP and AI-agent access is bundled into the plans rather than metered
+  separately — the pricing page lists "AI Agent & MCP access" as an Online-tier
+  feature, so there is no standalone API price and no free/developer tier.
+rate_limits: rate-limits/segmentstream-rate-limits.yml

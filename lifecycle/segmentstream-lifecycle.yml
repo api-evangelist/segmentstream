@@ -1,18 +1,79 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
-source: https://status.segmentstream.com + https://docs.segmentstream.com
+source: >-
+  https://status.segmentstream.com + https://docs.segmentstream.com +
+  https://segmentstream.com/blog/product-updates + https://segmentstream.com/pricing
 versioning:
   scheme: unversioned-mcp
   detail: >-
     The MCP endpoint (https://mcp.segmentstream.com/mcp) is served without a
-    version segment; tools evolve continuously. No public REST version scheme.
+    version segment; tools evolve continuously. The undocumented GraphQL surface
+    at api.segmentstream.com is path-versioned at /v1/, but nothing about it is
+    published. There is no public REST version scheme.
 deprecation:
   policy_url: null
   sunset_header: unknown
-  detail: No published deprecation policy or RFC 8594 Sunset-header support found.
+  detail: >-
+    No published deprecation policy and no RFC 8594 Sunset/Deprecation header
+    support found. This is a live gap rather than a theoretical one: the May
+    2026 rename of the Visit Scoring attribution model to Predictive Attribution
+    changed a model name that agents and integrations reference, and it shipped
+    as a blog post with no deprecation notice, sunset date, or migration path.
+    No Deprecation pointer is emitted.
+changelog:
+  url: https://segmentstream.com/blog/product-updates
+  scheme: dated-blog-posts
+  artifact: changelog/segmentstream-changelog.yml
+  detail: >-
+    Product changes are announced as dated marketing-blog posts. There is no
+    developer changelog, no version numbers, and no record of MCP tool
+    additions, renames or removals.
 sla:
   url: null
   uptime_target: null
+  detail: >-
+    No published uptime target. The pricing page lists "Priority SLA" as an
+    Enterprise-tier feature, so an SLA exists contractually for that tier but
+    its terms are not published.
 status_page: https://status.segmentstream.com
 status_page_provider: Freshping
+status_page_probe:
+  http_status: 200
+  checked: '2026-08-13'
+product_lifecycle:
+  - product: SegmentStream MCP server
+    stage: generally-available
+    since: '2026-02-25'
+    url: https://mcp.segmentstream.com/mcp
+  - product: SegmentStream SDK (browser tracker)
+    stage: generally-available
+    url: https://cdn.segmentstream.com/sdk/v1/segmentstream.min.js
+  - product: SegmentStream CLI
+    stage: private-beta
+    url: https://segmentstream.com/cli
+    detail: >-
+      "Request access" gate. Neither published install path resolves — the
+      install script 404s and @segmentstream/cli is not on npm.
+  - product: SegmentStream Cloud (white-label engine)
+    stage: waitlist
+    url: https://segmentstream.com/cloud
+    detail: Rolling out to a small group of design partners; waitlist signup only.
+  - product: Visit Scoring attribution model
+    stage: renamed
+    superseded_by: Predictive Attribution
+    date: '2026-05-06'
+    url: https://segmentstream.com/blog/product-updates/visit-scoring-becomes-predictive-attribution
+  - product: "@segmentstream/utils (npm)"
+    stage: abandoned
+    last_release: '2019-10-25'
+    detail: Repository archived; see packages/segmentstream-packages.yml.
+  - product: digital-data-manager (browser library)
+    stage: archived
+    date: '2022-12-06'
+    superseded_by: SegmentStream SDK
 deprecated_operations: []
+cross_links:
+  changelog: changelog/segmentstream-changelog.yml
+  packages: packages/segmentstream-packages.yml
+  cli: cli/segmentstream-cli.yml
+  components: components/segmentstream-components.yml

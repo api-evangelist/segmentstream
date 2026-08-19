@@ -4,13 +4,13 @@ status: published
 source: https://docs.segmentstream.com/mcp/overview
 server:
   name: segmentstream
-  description: >-
-    Hosted remote MCP server that gives AI tools secure, read-only access to a
-    SegmentStream workspace via the Model Context Protocol. Exposes marketing
-    measurement, attribution, budget optimization, and BigQuery query
-    capabilities as agent-callable tools.
-  transport: http            # Streamable HTTP (also supports SSE)
-  transports: [http, sse]
+  description: Hosted remote MCP server that gives AI tools secure, read-only access to a SegmentStream
+    workspace via the Model Context Protocol. Exposes marketing measurement, attribution, budget optimization,
+    and BigQuery query capabilities as agent-callable tools.
+  transport: http
+  transports:
+  - http
+  - sse
   url: https://mcp.segmentstream.com/mcp
   auth:
     type: oauth2
@@ -23,11 +23,16 @@ server:
     discovery:
       authorization_server: https://mcp.segmentstream.com/.well-known/oauth-authorization-server
       protected_resource: https://mcp.segmentstream.com/.well-known/oauth-protected-resource
-    notes: >-
-      OAuth is handled automatically in-client (browser sign-in + Allow);
-      enforces the same permissions as the SegmentStream UI. Access is read-only
-      for reporting, with configuration/creation tools scoped to the user's role.
-  clients: [Claude Desktop, Claude Code, Cursor, VS Code, Windsurf, any MCP client]
+    notes: OAuth is handled automatically in-client (browser sign-in + Allow); enforces the same permissions
+      as the SegmentStream UI. Access is read-only for reporting, with configuration/creation tools scoped
+      to the user's role.
+  clients:
+  - Claude Desktop
+  - Claude Code
+  - Cursor
+  - VS Code
+  - Windsurf
+  - any MCP client
   docs:
     overview: https://docs.segmentstream.com/mcp/overview
     getting_started: https://docs.segmentstream.com/mcp/getting-started
@@ -38,84 +43,157 @@ server:
         type: http
         url: https://mcp.segmentstream.com/mcp
 tools:
-  # AI Agent Orchestration
-  - {name: analyze_request, description: Initiate user analysis; return project context and analytical approach}
-  - {name: analyze_response, description: Validate response quality before delivery to user}
-  - {name: get_report_template, description: Load visual report template and design system}
-  # Projects and Account
-  - {name: list_active_projects, description: List all accessible SegmentStream projects with configuration}
-  - {name: get_project, description: Retrieve detailed project settings and features}
-  - {name: create_project, description: Establish a new SegmentStream project with BigQuery}
-  - {name: update_project, description: Modify project name, timezone, or currency}
-  - {name: get_current_user, description: Return authenticated user profile information}
-  - {name: get_project_members, description: List project collaborators and their roles}
-  - {name: invite_teammate, description: Send project collaboration invitation via email}
-  # Data Sources
-  - {name: list_data_sources, description: Enumerate connected ad platforms and systems}
-  - {name: get_data_source, description: Retrieve single data source configuration details}
-  - {name: get_data_source_logs, description: Access import logs and error tracking}
-  - {name: list_available_data_sources, description: Show supported platform types and auth methods}
-  - {name: connect_data_source, description: Initiate multi-step data platform connection flow}
-  - {name: disconnect_data_source, description: Clear credentials to reset connection state}
-  - {name: connect_bigquery, description: Establish BigQuery warehouse connection progressively}
-  # Conversions
-  - {name: list_conversions, description: Retrieve all conversion definitions for a project}
-  - {name: get_conversion, description: Fetch a single conversion with full configuration}
-  - {name: create_conversion, description: Establish new conversion tracking (purchase, event, or SQL)}
-  - {name: update_conversion, description: Modify conversion configuration and parameters}
-  - {name: list_conversion_fields, description: Enumerate available data fields per conversion}
-  - {name: get_conversion_statistics, description: Query totals and historical trends for conversions}
-  - {name: get_conversions_by_country, description: Geographic breakdown of conversion performance}
-  - {name: query_conversion_records, description: Retrieve individual conversion-level event data}
-  # Attribution Models
-  - {name: list_attribution_models, description: List configured attribution algorithms}
-  - {name: get_attribution_model, description: Retrieve a single model configuration with settings}
-  - {name: create_attribution_model, description: Build a new attribution model (first/last-click)}
-  - {name: update_attribution_model, description: Modify model window, rules, and parameters}
-  # Reports and Analytics
-  - {name: run_report, description: Execute aggregated performance query with attribution}
-  - {name: run_report_timeseries, description: Generate per-date metric trends for visualization}
-  - {name: list_saved_reports, description: Enumerate team-shared report templates}
-  - {name: get_saved_report, description: Retrieve a single saved report configuration}
-  - {name: save_report, description: Create, update, or duplicate a saved report}
-  - {name: share_artifact, description: Publish an HTML report as a shareable URL}
-  # Filters
-  - {name: list_filter_options, description: Discover available filter fields by tool type}
-  - {name: query_filter_option_values, description: Retrieve distinct values for a specific dimension}
-  # User Journey
-  - {name: get_user_journey, description: Trace individual user touchpoints and attribution credits}
-  - {name: debug_user_journey, description: Expose underlying BigQuery SQL for debugging}
-  # BigQuery Direct Access
-  - {name: bigquery_execute_sql, description: Run read-only SQL against the project dataset}
-  - {name: bigquery_get_table_schema, description: Return column definitions without writing SQL}
-  # Grouped Dimensions
-  - {name: list_grouped_dimensions, description: List custom categorization schemes}
-  - {name: get_grouped_dimension, description: Retrieve grouping rules and filter logic}
-  - {name: create_grouped_dimension, description: Establish a new traffic bucketing dimension}
-  - {name: update_grouped_dimension, description: Modify grouping rules and category assignments}
-  # Audiences
-  - {name: list_audiences, description: Enumerate user segment definitions}
-  - {name: get_audience, description: Retrieve audience filter criteria and parameters}
-  - {name: query_audiences_by_client_id, description: Check segment membership for an individual user}
-  - {name: get_audiences_inclusion, description: Report audience population statistics}
-  # Workflows
-  - {name: list_workflows, description: Show recent data processing job executions}
-  - {name: get_workflow_status, description: Retrieve job completion status and error details}
-  # Cost Data Quality
-  - {name: get_cost_data_quality, description: Report advertising spend accuracy metrics}
-  # Identity Graph
-  - {name: get_identity_graph_statistics, description: Show user stitching and deduplication stats}
-  # Incidents
-  - {name: list_incidents, description: List project health alerts and error conditions}
-  # Classifiers (ML Models)
-  - {name: list_classifiers, description: Enumerate conversion scoring classifiers}
-  - {name: get_classifier, description: Retrieve classifier configuration}
-  - {name: list_classifier_models, description: Show available ML model types and pricing}
-  # Portfolios (Budget Optimization)
-  - {name: list_portfolios, description: List budget allocation optimization scenarios}
-  - {name: get_portfolio_history, description: Query optimization performance metrics over time}
-  - {name: get_portfolio_optimization, description: Retrieve marginal ROAS and budget recommendations}
-  # Experiments (Geo Tests)
-  - {name: list_experiments, description: Enumerate active and completed geo-lift tests}
-  - {name: get_experiment, description: Retrieve experiment results and statistical findings}
-  - {name: list_experiment_custom_parameter_keys, description: Show segmentation options for tests}
+- name: analyze_request
+  description: Initiate user analysis; return project context and analytical approach
+- name: analyze_response
+  description: Validate response quality before delivery to user
+- name: get_report_template
+  description: Load visual report template and design system
+- name: list_active_projects
+  description: List all accessible SegmentStream projects with configuration
+- name: get_project
+  description: Retrieve detailed project settings and features
+- name: create_project
+  description: Establish a new SegmentStream project with BigQuery
+- name: update_project
+  description: "Modify project name, timezone, or currency settings"
+- name: get_current_user
+  description: Return authenticated user profile information
+- name: get_project_members
+  description: List project collaborators and their roles
+- name: invite_teammate
+  description: Send project collaboration invitation via email
+- name: list_data_sources
+  description: Enumerate connected ad platforms and systems
+- name: get_data_source
+  description: Retrieve single data source configuration details
+- name: get_data_source_logs
+  description: Access import logs and error tracking
+- name: list_available_data_sources
+  description: Show supported platform types and auth methods
+- name: connect_data_source
+  description: Initiate multi-step data platform connection flow
+- name: disconnect_data_source
+  description: Clear credentials to reset connection state
+- name: connect_bigquery
+  description: Establish BigQuery warehouse connection progressively
+- name: list_conversions
+  description: Retrieve all conversion definitions for a project
+- name: get_conversion
+  description: Fetch a single conversion with full configuration
+- name: create_conversion
+  description: "Define new conversion from purchase tracking, events, or SQL queries"
+- name: update_conversion
+  description: Modify conversion configuration and parameters
+- name: list_conversion_fields
+  description: Enumerate available data fields per conversion
+- name: get_conversion_statistics
+  description: Query totals and historical trends for conversions
+- name: get_conversions_by_country
+  description: Geographic breakdown of conversion performance
+- name: query_conversion_records
+  description: Retrieve individual conversion-level event data
+- name: list_attribution_models
+  description: List configured attribution algorithms
+- name: get_attribution_model
+  description: Retrieve a single model configuration with settings
+- name: create_attribution_model
+  description: Build a new attribution model (first/last-click)
+- name: update_attribution_model
+  description: "Modify model window, touch rules, or reattribution settings"
+- name: run_report
+  description: Execute aggregated performance query with attribution
+- name: run_report_timeseries
+  description: Generate per-date metric trends for visualization
+- name: list_saved_reports
+  description: Enumerate team-shared report templates
+- name: get_saved_report
+  description: Retrieve a single saved report configuration
+- name: save_report
+  description: "Create, update, or duplicate saved report definitions"
+- name: share_artifact
+  description: Publish an HTML report as a shareable URL
+- name: list_filter_options
+  description: Discover available filter fields by tool type
+- name: query_filter_option_values
+  description: Retrieve distinct values for a specific dimension
+- name: get_user_journey
+  description: Trace individual user touchpoints and attribution credits
+- name: debug_user_journey
+  description: Expose underlying BigQuery SQL for debugging
+- name: bigquery_execute_sql
+  description: Run read-only SQL against the project dataset
+- name: bigquery_get_table_schema
+  description: Return column definitions without writing SQL
+- name: list_grouped_dimensions
+  description: List custom categorization schemes
+- name: get_grouped_dimension
+  description: Retrieve grouping rules and filter logic
+- name: create_grouped_dimension
+  description: Establish a new traffic bucketing dimension
+- name: update_grouped_dimension
+  description: Modify grouping rules and category assignments
+- name: list_audiences
+  description: Enumerate user segment definitions
+- name: get_audience
+  description: Retrieve audience filter criteria and parameters
+- name: query_audiences_by_client_id
+  description: Check segment membership for an individual user
+- name: get_audiences_inclusion
+  description: Report audience population statistics
+- name: list_workflows
+  description: Show recent data processing job executions
+- name: get_workflow_status
+  description: Retrieve job completion status and error details
+- name: get_cost_data_quality
+  description: Report advertising spend accuracy metrics
+- name: get_identity_graph_statistics
+  description: Show user stitching and deduplication stats
+- name: list_incidents
+  description: List project health alerts and error conditions
+- name: list_classifiers
+  description: Enumerate conversion scoring classifiers
+- name: get_classifier
+  description: Retrieve classifier configuration
+- name: list_classifier_models
+  description: Show available ML model types and pricing
+- name: list_portfolios
+  description: List budget allocation optimization scenarios
+- name: get_portfolio_history
+  description: Query optimization performance metrics over time
+- name: get_portfolio_optimization
+  description: Retrieve marginal ROAS and budget recommendations
+- name: list_experiments
+  description: Enumerate active and completed geo-lift tests
+- name: get_experiment
+  description: Retrieve experiment results and statistical findings
+- name: list_experiment_custom_parameter_keys
+  description: Show segmentation options for tests
+tool_count: 63
+tools_source: >-
+  https://docs.segmentstream.com/mcp/supported-tools — names and descriptions
+  are transcribed from the provider's published tool reference. Live inputSchema
+  values are NOT included: tools/list is auth-gated (see deployment.probe), so
+  no tool's real input contract has been observed and none is reconstructed here.
+deployment:
+  mode: remote
+  endpoint: https://mcp.segmentstream.com/mcp
+  install: null
+  package: null
+  auth: oauth
+  verified: probed
+  probe: gated
+  checked: '2026-08-13'
+  source: >-
+    POST {"jsonrpc":"2.0","id":1,"method":"tools/list"} to
+    https://mcp.segmentstream.com/mcp with Accept: application/json,
+    text/event-stream
+  probe_result:
+    http_status: 401
+    body: '{"jsonrpc":"2.0","error":{"code":-32600,"message":"Authorization header is required"},"id":null}'
+  note: >-
+    Remote-only. SegmentStream ships a hosted HTTPS endpoint an MCP client POSTs
+    to directly — there is no stdio package to install, so `install` and
+    `package` are null by fact, not by omission. The endpoint is live and
+    reachable; anonymous tools/list is refused, which is the expected posture for
+    a per-workspace server behind OAuth.

@@ -1,16 +1,70 @@
-generated: '2026-07-21'
-method: generated
-source: mcp/segmentstream-mcp.yml (tool names verified against docs.segmentstream.com/mcp/supported-tools)
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://docs.segmentstream.com/.well-known/agent-skills/segmentstream/skill.md
+  (provider-published, discovered via the A2A agent card) + docs.segmentstream.com/mcp/supported-tools
+detail: >-
+  SegmentStream publishes its own Agent Skill and advertises it from its A2A
+  agent card, so the primary entry below is the provider's file saved verbatim
+  rather than anything authored here. The three flow-specific skills generated
+  in the previous round are retained beneath it: they decompose the provider's
+  single broad skill into the marquee flows and name the exact MCP tools each
+  one calls, which the provider's skill does not do.
 skills:
+  - file: segmentstream-provider-skill.md
+    name: Segmentstream
+    method: searched
+    provenance: first-party
+    source: https://docs.segmentstream.com/.well-known/agent-skills/segmentstream/skill.md
+    discovered_via: a2a/segmentstream-agent-card.json (skills[0].url)
+    api: mcp/segmentstream-mcp.yml
+    fetched: '2026-08-13'
+    http_status: 200
+    content_type: text/markdown
+    bytes: 15102
+    description: >-
+      Use when building marketing attribution models, analyzing campaign
+      performance, optimizing budget allocation across channels, configuring
+      event tracking and data sources, or querying attribution data through
+      natural language via MCP.
+    covers:
+      - Product summary and when to reach for the skill
+      - Core configuration workflow (8 steps)
+      - Conversion types, attribution models, report dimensions and metrics
+      - Decision guidance tables (warehouse, conversion type, model, MCP vs UI)
+      - Four worked workflows including querying via MCP
+      - Ten common gotchas and a ten-item verification checklist
+    note: >-
+      Saved verbatim. Frontmatter carries metadata.mintlify-proj: segmentstream
+      and version "1.0". Written against the product surface rather than the tool
+      surface — it names only a handful of MCP tools inline and does not
+      enumerate operations, which is why the derived skills below are kept.
   - file: segmentstream-measure-and-optimize-spend.md
     name: Measure attribution and optimize ad spend
+    method: generated
+    provenance: derived
     api: mcp/segmentstream-mcp.yml
     operations: [list_active_projects, get_project, run_report, run_report_timeseries, list_portfolios, get_portfolio_optimization, get_portfolio_history]
   - file: segmentstream-run-geo-incrementality-test.md
     name: Read geo-incrementality experiment results
+    method: generated
+    provenance: derived
     api: mcp/segmentstream-mcp.yml
     operations: [list_active_projects, list_experiments, get_experiment, list_experiment_custom_parameter_keys]
   - file: segmentstream-configure-conversions.md
     name: Configure conversions and query performance
+    method: generated
+    provenance: derived
     api: mcp/segmentstream-mcp.yml
     operations: [list_active_projects, list_conversions, get_conversion, create_conversion, list_conversion_fields, get_conversion_statistics, get_conversions_by_country]
+related:
+  prompt_library:
+    url: https://segmentstream.com/ai-skills
+    kind: prompt-templates
+    count: 30+
+    note: >-
+      SegmentStream also publishes a page it calls "AI Skills". These are
+      copy-paste prompt templates for Claude, Codex and Cursor across six
+      categories — not installable Agent Skill files, with no download URL,
+      package or repository. Recorded here so the naming collision does not read
+      as a second skill artifact.
