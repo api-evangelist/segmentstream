@@ -22,6 +22,17 @@ x-tier-reason: >-
   Promoted from stub on 2026-08-13. Two rounds of enrichment established a real
   first-party agent surface (hosted MCP server, A2A agent card, published Agent
   Skill) plus pricing, CLI, changelog and error artifacts.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
