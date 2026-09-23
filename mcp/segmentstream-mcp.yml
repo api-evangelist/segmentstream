@@ -56,7 +56,7 @@ tools:
 - name: create_project
   description: Establish a new SegmentStream project with BigQuery
 - name: update_project
-  description: "Modify project name, timezone, or currency settings"
+  description: Modify project name, timezone, or currency settings
 - name: get_current_user
   description: Return authenticated user profile information
 - name: get_project_members
@@ -82,7 +82,7 @@ tools:
 - name: get_conversion
   description: Fetch a single conversion with full configuration
 - name: create_conversion
-  description: "Define new conversion from purchase tracking, events, or SQL queries"
+  description: Define new conversion from purchase tracking, events, or SQL queries
 - name: update_conversion
   description: Modify conversion configuration and parameters
 - name: list_conversion_fields
@@ -100,7 +100,7 @@ tools:
 - name: create_attribution_model
   description: Build a new attribution model (first/last-click)
 - name: update_attribution_model
-  description: "Modify model window, touch rules, or reattribution settings"
+  description: Modify model window, touch rules, or reattribution settings
 - name: run_report
   description: Execute aggregated performance query with attribution
 - name: run_report_timeseries
@@ -110,7 +110,7 @@ tools:
 - name: get_saved_report
   description: Retrieve a single saved report configuration
 - name: save_report
-  description: "Create, update, or duplicate saved report definitions"
+  description: Create, update, or duplicate saved report definitions
 - name: share_artifact
   description: Publish an HTML report as a shareable URL
 - name: list_filter_options
@@ -170,30 +170,14 @@ tools:
 - name: list_experiment_custom_parameter_keys
   description: Show segmentation options for tests
 tool_count: 63
-tools_source: >-
-  https://docs.segmentstream.com/mcp/supported-tools — names and descriptions
-  are transcribed from the provider's published tool reference. Live inputSchema
-  values are NOT included: tools/list is auth-gated (see deployment.probe), so
-  no tool's real input contract has been observed and none is reconstructed here.
+tools_source: 'https://docs.segmentstream.com/mcp/supported-tools — names and descriptions are transcribed
+  from the provider''s published tool reference. Live inputSchema values are NOT included: tools/list
+  is auth-gated (see deployment.probe), so no tool''s real input contract has been observed and none is
+  reconstructed here.'
 deployment:
   mode: remote
   endpoint: https://mcp.segmentstream.com/mcp
-  install: null
-  package: null
-  auth: oauth
   verified: probed
   probe: gated
-  checked: '2026-08-13'
-  source: >-
-    POST {"jsonrpc":"2.0","id":1,"method":"tools/list"} to
-    https://mcp.segmentstream.com/mcp with Accept: application/json,
-    text/event-stream
-  probe_result:
-    http_status: 401
-    body: '{"jsonrpc":"2.0","error":{"code":-32600,"message":"Authorization header is required"},"id":null}'
-  note: >-
-    Remote-only. SegmentStream ships a hosted HTTPS endpoint an MCP client POSTs
-    to directly — there is no stdio package to install, so `install` and
-    `package` are null by fact, not by omission. The endpoint is live and
-    reachable; anonymous tools/list is refused, which is the expected posture for
-    a per-workspace server behind OAuth.
+  checked: '2026-08-12'
+  source: catalog MCP census
