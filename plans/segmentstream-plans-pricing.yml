@@ -90,3 +90,31 @@ api_access_note: >-
   separately — the pricing page lists "AI Agent & MCP access" as an Online-tier
   feature, so there is no standalone API price and no free/developer tier.
 rate_limits: rate-limits/segmentstream-rate-limits.yml
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - subscription
+  units: []
+  plans:
+  - name: Online
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Full Funnel
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
